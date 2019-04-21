@@ -113,7 +113,7 @@
     let appendServices = (services) => {
       let list = document.getElementById("list")
       list.innerHTML = ''
-      if (services.length !== 1) {
+      if (services.length !== 0) {
         for (let obj of services) {
           let newli = document.createElement('li')
           newli.innerHTML = `${obj}: <span class="item">${generateString()}.${window.btoa(obj)}</span>`
