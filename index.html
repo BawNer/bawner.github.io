@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style>
+    * {
+      padding: 0;
+      margin: 0;
+      font-family: 'Segoe UI';
+      box-sizing: border-box;
+    }
+
+    .wrapper {
+      width: 100%;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .user-action {
+      width: 400px;
+      height: 200px;
+      border: 1px solid rgb(214, 214, 214);
+      border-radius: .4rem;
+      margin: 10px;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-items: center;
+      padding: 15px;
+    }
+
+    .user-action:nth-child(2) {
+      overflow-y: scroll;
+    }
+
+    .user-action_input {
+      width: 100%;
+      height: 30px;
+      border: 1px solid rgb(214, 214, 214);
+      padding: 5px;
+      border-radius: .3rem;
+    }
+
+    .user-action_btn {
+      padding: 10px 15px;
+      border-radius: .3rem;
+      border: none;
+      font-size: 1em;
+      cursor: pointer;
+      transition: .2s all;
+    }
+
+    .user-action_btn:hover {
+      background: #2ecc71;
+      color: #fff;
+    }
+
+    .item {
+      font-size: 1.1em;
+      cursor: pointer;
+      padding: 5px;
+    }
+
+    li {
+      list-style: none;
+      border-bottom: 1px solid rgb(214, 214, 214);
+      margin-bottom: 10px;
+    }
+
+    .item:hover {
+      background: #ecf0f1;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="wrapper">
+    <div class="user-action">
+      <label for="listing">Введите сервисы через запятую и без пробелов</label>
+      <small>Вконтакте,Google,Yandex....</small>
+      <input type="text" id="listing" class="user-action_input">
+      <button class="user-action_btn" id="generate">Сгенерировать</button>
+    </div>
+    <div class="user-action">
+      <ul id="list"></ul>
+    </div>
+  </div>
+
+  <script>
+    let generateString = () => {
+      let char = 'qwertyuiop[]asdfghjklzxcvbnm,.1234567890'
+      let string = ''
+      let loop = Math.floor(Math.random() * (char.length - 8)) + 8
+      let arr = []
+      for (let i = 0; i < loop; i++) {
+        let random = Math.floor(Math.random() * (char.length - i)) + i
+        arr.push(char[random])
+      }
+      for (let i = 0; i < 8; i++) {
+        let rand = Math.floor(Math.random() * char.length)
+        string += arr[i]
+      }
+      return window.btoa(string)
+    }
+
+    let appendServices = (services) => {
+      let list = document.getElementById("list")
+      list.innerHTML = ''
+      if (services.length !== 1) {
+        for (let obj of services) {
+          let newli = document.createElement('li')
+          newli.innerHTML = `${obj}: <span class="item">${generateString()}.${window.btoa(obj)}</span>`
+          list.appendChild(newli)
+        }
+
+        let key = document.getElementsByClassName("item")
+        for (let i = 0; i < key.length; i++) {
+          key[i].addEventListener('click', e => {
+            navigator.clipboard.writeText(e.currentTarget.innerText).then(() => alert('Скопированно!'))
+          })
+        }
+      } else {
+        alert('Введите данные для генерации')
+      }
+
+    }
+
+    let btn = document.getElementById("generate")
+
+    btn.addEventListener('click', () => {
+      let values = document.getElementById("listing").value
+      let services = values.split(',')
+      appendServices(services)
+    })
+  </script>
+</body>
+
+</html>
