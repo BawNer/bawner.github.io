@@ -36,7 +36,7 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/skf/img/steps/number_one.png"
   },
   {
-    "revision": "26ea0c3682f480fa9e26ed43d0cb8530",
+    "revision": "3cb18f39180eeadb68a5d0f7f79a9b02",
     "url": "/skf/index.html"
   },
   {
